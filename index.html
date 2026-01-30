@@ -19,7 +19,14 @@ body {
     font-family: 'Playfair Display', serif;
     transition: background 0.6s ease;
 }
-
+@media (max-width: 600px) {
+    body {
+        align-items: flex-start;
+        padding-top: 24px;
+        height: auto;
+        min-height: 100vh;
+    }
+}
 body.blue {
     background: #CEE4F9;
 }
