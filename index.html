@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #FFF3F7;
+    --title-main: #EAA5B2;
+    --title-lava: #F1B7C2;
+    --letter-bg: #FFFFFF;
+    --triangle: #E7BBC4;
+    --heart: #d94b6a;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    transition: background 0.8s ease;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Allura', cursive;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    position: relative;
+    color: var(--title-main);
+    background: linear-gradient(
+        120deg,
+        var(--title-main),
+        var(--title-lava),
+        var(--title-main)
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: lava 6s ease-in-out infinite;
+}
+
+@keyframes lava {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.envelope {
+    width: 320px;
+    height: 200px;
+    background: var(--letter-bg);
+    position: relative;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    margin: 0 auto;
+}
+
+.envelope::before,
+.envelope::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    background: var(--triangle);
+}
+
+.envelope::before {
+    left: 0;
+    clip-path: polygon(0 100%, 100% 0, 0 0);
+}
+
+.envelope::after {
+    right: 0;
+    clip-path: polygon(100% 100%, 100% 0, 0 0);
+}
+
+.heart {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: var(--heart);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: var(--heart);
+    border-radius: 50%;
+}
+
+.heart::before { top: -15px; }
+.heart::after { left: -15px; }
+
+.letter {
+    display: none;
+    width: 320px;
+    background: var(--letter-bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 10px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.letter::before,
+.letter::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    background: var(--triangle);
+}
+
+.letter::before {
+    left: 0;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.letter::after {
+    right: 0;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.close-btn {
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+    color: var(--title-main);
+}
+
+.message {
+    max-height: 280px;
+    overflow-y: auto;
+    text-align: left;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.signature {
+    margin-top: 20px;
+    text-align: right;
+    font-style: italic;
+}
+
+.switches {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.switch {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.switch.pink { background: #F4D8DE; }
+.switch.blue { background: #C2D8EC; }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Happy Birthday to You</h1>
+
+<div class="envelope" onclick="openLetter()">
+    <div class="heart"></div>
+</div>
+
+<div class="letter" id="letter">
+    <div class="close-btn" onclick="closeLetter()">Close</div>
+
+    <div class="message">
+I can't even begin to describe how much I value our friendship. A friend like you is more priceless than the most beautiful diamond. You are not only kind and thoughtful, but the most wonderful and supportive, and your birthday is the perfect opportunity to show you how much I care and how grateful I am to have you in my life.
+
+<br><br>
+
+You make my life happier, bring a smile on my face, and an appreciation for friendship, support, and life. In today's world, friends are easy to find but a friend like you can not be found even in one in a billion, words are not enough to express what you mean to me.
+
+<br><br>
+
+I appreciate you till I last and thank you for making this life worth living. Having you has always been like having a sister who listens to all your problems and inspires you, and I want you to be my best friend for the rest of my life.
+
+<br><br>
+
+My birthday wish for you is that you continue to love life and never stop dreaming. May you be blessed with a long, healthy life that fills you with joy and happiness, and may beauty and pleasant surprises surround you, not only on your special day, but always.
+
+<br><br>
+
+I hope your day is filled with lots of love and fun! May all of your birthday wishes come true, my precious bestie 💗
+    </div>
+
+    <div class="signature">
+        Melanie ❤️
+    </div>
+</div>
+
+<div class="switches">
+    <div class="switch pink" onclick="setPink()"></div>
+    <div class="switch blue" onclick="setBlue()"></div>
+</div>
+
+</div>
+
+<script>
+function openLetter() {
+    document.querySelector('.envelope').style.display = 'none';
+    document.getElementById('letter').style.display = 'block';
+}
+
+function closeLetter() {
+    document.getElementById('letter').style.display = 'none';
+    document.querySelector('.envelope').style.display = 'block';
+}
+
+function setPink() {
+    document.documentElement.style.setProperty('--bg', '#FFF3F7');
+    document.documentElement.style.setProperty('--title-main', '#EAA5B2');
+    document.documentElement.style.setProperty('--title-lava', '#F1B7C2');
+    document.documentElement.style.setProperty('--letter-bg', '#FFFFFF');
+    document.documentElement.style.setProperty('--triangle', '#E7BBC4');
+    document.documentElement.style.setProperty('--heart', '#d94b6a');
+}
+
+function setBlue() {
+    document.documentElement.style.setProperty('--bg', '#CEE4F9');
+    document.documentElement.style.setProperty('--title-main', '#B8CEE2');
+    document.documentElement.style.setProperty('--title-lava', '#AABFD3');
+    document.documentElement.style.setProperty('--letter-bg', '#BBD0E4');
+    document.documentElement.style.setProperty('--triangle', '#AEC3D7');
+    document.documentElement.style.setProperty('--heart', '#A4B8CA');
+}
+</script>
+</body>
+</html>
