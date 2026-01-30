@@ -9,39 +9,58 @@
 <style>
 :root {
     --bg: #FFF3F7;
-    --title-main: #EAA5B2;
-    --title-lava: #F1B7C2;
-    --letter-bg: #FFFFFF;
-    --triangle: #E7BBC4;
+    --title: #EAA5B2;
+    --letter: #ffffff;
     --heart: #d94b6a;
+    --close: #EAA5B2;
+    --lava1: transparent;
+    --lava2: transparent;
+}
+
+/* BLUE THEME */
+body.blue {
+    --bg: #CEE4F9;
+    --title: #B8CEE2;
+    --letter: #BBD0E4;
+    --heart: #A4B8CA;
+    --close: #CEE4F9;
+    --lava1: #B8CEE2;
+    --lava2: #AABFD3;
 }
 
 body {
     margin: 0;
+    padding: 0;
     height: 100vh;
     background: var(--bg);
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Playfair Display', serif;
-    transition: background 0.8s ease;
+    transition: background 0.6s ease;
 }
 
 .container {
     text-align: center;
 }
 
+/* TITLE */
 h1 {
     font-family: 'Allura', cursive;
     font-size: 3rem;
     margin-bottom: 20px;
     position: relative;
-    color: var(--title-main);
+    left: 2px;
+    color: var(--title);
+}
+
+/* LAVA EFFECT ONLY FOR BLUE */
+body.blue h1 {
     background: linear-gradient(
         120deg,
-        var(--title-main),
-        var(--title-lava),
-        var(--title-main)
+        var(--lava1),
+        var(--lava2),
+        var(--lava1)
     );
     background-size: 300% 300%;
     -webkit-background-clip: text;
@@ -58,32 +77,28 @@ h1 {
 .envelope {
     width: 320px;
     height: 200px;
-    background: var(--letter-bg);
+    background: #f2c6cf;
     position: relative;
     border-radius: 12px;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     margin: 0 auto;
+    animation: float 3s ease-in-out infinite alternate;
 }
 
-.envelope::before,
-.envelope::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 50%;
-    height: 100%;
-    background: var(--triangle);
+body.blue .envelope {
+    background: #C2D8EC;
 }
 
-.envelope::before {
-    left: 0;
-    clip-path: polygon(0 100%, 100% 0, 0 0);
+@keyframes float {
+    0% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.02) translateY(-5px); }
+    100% { transform: scale(1) translateY(0); }
 }
 
-.envelope::after {
-    right: 0;
-    clip-path: polygon(100% 100%, 100% 0, 0 0);
+.envelope:hover {
+    animation: none;
+    transform: scale(1.05);
 }
 
 .heart {
@@ -112,39 +127,27 @@ h1 {
 .letter {
     display: none;
     width: 320px;
-    background: var(--letter-bg);
+    background: var(--letter);
     border-radius: 12px;
     padding: 20px;
-    margin-top: 10px;
-    position: relative;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    margin-top: 10px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: transform 1s ease, opacity 0.5s ease;
 }
 
-.letter::before,
-.letter::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 20px;
-    height: 100%;
-    background: var(--triangle);
-}
-
-.letter::before {
-    left: 0;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-
-.letter::after {
-    right: 0;
-    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+.letter.show {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
 }
 
 .close-btn {
     font-size: 0.9rem;
+    color: var(--close);
     cursor: pointer;
     margin-bottom: 10px;
-    color: var(--title-main);
 }
 
 .message {
@@ -161,16 +164,17 @@ h1 {
     font-style: italic;
 }
 
+/* COLOR SWITCH BUTTONS */
 .switches {
-    margin-top: 12px;
     display: flex;
     justify-content: center;
     gap: 10px;
+    margin-top: 14px;
 }
 
 .switch {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     border-radius: 6px;
     cursor: pointer;
 }
@@ -181,6 +185,7 @@ h1 {
 </head>
 
 <body>
+
 <div class="container">
 
 <h1>Happy Birthday to You</h1>
@@ -227,31 +232,28 @@ I hope your day is filled with lots of love and fun! May all of your birthday wi
 <script>
 function openLetter() {
     document.querySelector('.envelope').style.display = 'none';
-    document.getElementById('letter').style.display = 'block';
+    const letter = document.getElementById('letter');
+    letter.style.display = 'block';
+    setTimeout(() => letter.classList.add('show'), 50);
 }
 
 function closeLetter() {
-    document.getElementById('letter').style.display = 'none';
-    document.querySelector('.envelope').style.display = 'block';
+    const letter = document.getElementById('letter');
+    letter.classList.remove('show');
+    setTimeout(() => {
+        letter.style.display = 'none';
+        document.querySelector('.envelope').style.display = 'block';
+    }, 500);
 }
 
 function setPink() {
-    document.documentElement.style.setProperty('--bg', '#FFF3F7');
-    document.documentElement.style.setProperty('--title-main', '#EAA5B2');
-    document.documentElement.style.setProperty('--title-lava', '#F1B7C2');
-    document.documentElement.style.setProperty('--letter-bg', '#FFFFFF');
-    document.documentElement.style.setProperty('--triangle', '#E7BBC4');
-    document.documentElement.style.setProperty('--heart', '#d94b6a');
+    document.body.classList.remove('blue');
 }
 
 function setBlue() {
-    document.documentElement.style.setProperty('--bg', '#CEE4F9');
-    document.documentElement.style.setProperty('--title-main', '#B8CEE2');
-    document.documentElement.style.setProperty('--title-lava', '#AABFD3');
-    document.documentElement.style.setProperty('--letter-bg', '#BBD0E4');
-    document.documentElement.style.setProperty('--triangle', '#AEC3D7');
-    document.documentElement.style.setProperty('--heart', '#A4B8CA');
+    document.body.classList.add('blue');
 }
 </script>
+
 </body>
 </html>
