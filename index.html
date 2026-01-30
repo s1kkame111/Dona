@@ -7,37 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --bg: #FFF3F7;
-    --title: #EAA5B2;
-    --letter: #ffffff;
-    --heart: #d94b6a;
-    --close: #EAA5B2;
-    --lava1: transparent;
-    --lava2: transparent;
-}
-
-/* BLUE THEME */
-body.blue {
-    --bg: #CEE4F9;
-    --title: #B8CEE2;
-    --letter: #BBD0E4;
-    --heart: #A4B8CA;
-    --close: #CEE4F9;
-    --lava1: #B8CEE2;
-    --lava2: #AABFD3;
-}
-
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background: var(--bg);
+    background: #FFF3F7;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Playfair Display', serif;
     transition: background 0.6s ease;
+}
+
+body.blue {
+    background: #CEE4F9;
 }
 
 .container {
@@ -48,32 +31,30 @@ body {
 h1 {
     font-family: 'Allura', cursive;
     font-size: 3rem;
+    color: #EAA5B2;
     margin-bottom: 20px;
     position: relative;
     left: 2px;
-    color: var(--title);
 }
 
-/* LAVA EFFECT ONLY FOR BLUE */
 body.blue h1 {
-    background: linear-gradient(
-        120deg,
-        var(--lava1),
-        var(--lava2),
-        var(--lava1)
-    );
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: lava 6s ease-in-out infinite;
+    color: #B8CEE2;
+    animation: lavaText 6s ease-in-out infinite;
 }
 
-@keyframes lava {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes lavaText {
+    0% {
+        text-shadow: 2px 0 #AABFD3, -2px 0 #B8CEE2;
+    }
+    50% {
+        text-shadow: -2px 2px #AABFD3, 2px -2px #B8CEE2;
+    }
+    100% {
+        text-shadow: 2px -2px #AABFD3, -2px 2px #B8CEE2;
+    }
 }
 
+/* ENVELOPE */
 .envelope {
     width: 320px;
     height: 200px;
@@ -83,6 +64,7 @@ body.blue h1 {
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     margin: 0 auto;
+    transform-origin: center;
     animation: float 3s ease-in-out infinite alternate;
 }
 
@@ -101,11 +83,12 @@ body.blue .envelope {
     transform: scale(1.05);
 }
 
+/* HEART — ORIGINAL SHAPE */
 .heart {
     position: absolute;
     width: 30px;
     height: 30px;
-    background: var(--heart);
+    background: #d94b6a;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
@@ -117,24 +100,35 @@ body.blue .envelope {
     position: absolute;
     width: 30px;
     height: 30px;
-    background: var(--heart);
+    background: #d94b6a;
     border-radius: 50%;
 }
 
-.heart::before { top: -15px; }
-.heart::after { left: -15px; }
+.heart::before { top: -15px; left: 0; }
+.heart::after { left: -15px; top: 0; }
 
+body.blue .heart,
+body.blue .heart::before,
+body.blue .heart::after {
+    background: #A4B8CA;
+}
+
+/* LETTER */
 .letter {
     display: none;
     width: 320px;
-    background: var(--letter);
+    background: #ffffff;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     margin-top: 10px;
-    opacity: 0;
     transform: scale(0.95);
     transition: transform 1s ease, opacity 0.5s ease;
+    opacity: 0;
+}
+
+body.blue .letter {
+    background: #BBD0E4;
 }
 
 .letter.show {
@@ -145,9 +139,13 @@ body.blue .envelope {
 
 .close-btn {
     font-size: 0.9rem;
-    color: var(--close);
+    color: #EAA5B2;
     cursor: pointer;
     margin-bottom: 10px;
+}
+
+body.blue .close-btn {
+    color: #CEE4F9;
 }
 
 .message {
@@ -164,7 +162,7 @@ body.blue .envelope {
     font-style: italic;
 }
 
-/* COLOR SWITCH BUTTONS */
+/* COLOR SWITCH */
 .switches {
     display: flex;
     justify-content: center;
@@ -187,17 +185,16 @@ body.blue .envelope {
 <body>
 
 <div class="container">
+    <h1>Happy Birthday to You</h1>
 
-<h1>Happy Birthday to You</h1>
+    <div class="envelope" onclick="openLetter()">
+        <div class="heart"></div>
+    </div>
 
-<div class="envelope" onclick="openLetter()">
-    <div class="heart"></div>
-</div>
+    <div class="letter" id="letter">
+        <div class="close-btn" onclick="closeLetter()">Close</div>
 
-<div class="letter" id="letter">
-    <div class="close-btn" onclick="closeLetter()">Close</div>
-
-    <div class="message">
+        <div class="message">
 I can't even begin to describe how much I value our friendship. A friend like you is more priceless than the most beautiful diamond. You are not only kind and thoughtful, but the most wonderful and supportive, and your birthday is the perfect opportunity to show you how much I care and how grateful I am to have you in my life.
 
 <br><br>
@@ -215,18 +212,17 @@ My birthday wish for you is that you continue to love life and never stop dreami
 <br><br>
 
 I hope your day is filled with lots of love and fun! May all of your birthday wishes come true, my precious bestie 💗
+        </div>
+
+        <div class="signature">
+            Melanie ❤️
+        </div>
     </div>
 
-    <div class="signature">
-        Melanie ❤️
+    <div class="switches">
+        <div class="switch pink" onclick="setPink()"></div>
+        <div class="switch blue" onclick="setBlue()"></div>
     </div>
-</div>
-
-<div class="switches">
-    <div class="switch pink" onclick="setPink()"></div>
-    <div class="switch blue" onclick="setBlue()"></div>
-</div>
-
 </div>
 
 <script>
